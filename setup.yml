@@ -118,10 +118,16 @@
         src: "{{ xdebugTemplatePath }}"
         dest: /etc/php5/apache2/conf.d/xdebug-remote-debugging.ini       
 
+    - name: Download WordPress
+      get_url:
+        url: https://wordpress.org/latest.zip
+        dest: "/home/vagrant/wordpress.zip"
+
     - name: Unzip WordPress
       unarchive: 
-        src: wordpress.zip 
-        dest: /vagrant/
+        src: "/home/vagrant/wordpress.zip"
+        dest: "/home/vagrant/"
+        copy: no
 
     - name: Symlink web root to unzipped WordPress
       file:
