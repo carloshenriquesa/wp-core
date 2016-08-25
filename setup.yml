@@ -131,7 +131,7 @@
 
     - name: Symlink web root to unzipped WordPress
       file:
-        src: "/vagrant/wordpress"
+        src: "/home/vagrant/wordpress"
         dest: "/var/www/wordpress"
         state: "link"
 
