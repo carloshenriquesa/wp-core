@@ -10,8 +10,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = "wordpress.dev"
   config.vm.provision "ansible" do |ansible|
     ansible.verbose = "v"
-    ansible.playbook = "setup.yml"
-    ansible.inventory_path = "vagrant-inventory"
+    ansible.playbook = "ansible/setup.yml"
+    ansible.inventory_path = "ansible/vagrant-inventory"
     ansible.host_key_checking = "false"
     ansible.limit = "all"
   end

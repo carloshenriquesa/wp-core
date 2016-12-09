@@ -1,0 +1,53 @@
+export PROJECT_ROOT="/vagrant/wordpress"
+export CONFIG_DB_DEFAULT="--dbuser=root --dbpass=mysql --locale=pt_BR"
+
+alias ..="cd .."
+alias ...="cd ../.."
+alias ~="cd ~" # `cd` is probably faster to type though
+alias -- -="cd -"
+alias vv='cd ..; cd -'
+
+# List all files colorized in long format
+alias l="ls -GlAh"
+alias ll="ls -Glh"
+
+# List all files colorized, including dot files
+alias la="ls -GA"
+
+# List only directories
+alias lsd='ls -l | grep "^d"'
+
+# Set the projects
+function set_project {
+  project_name="$1"
+
+  cd $PROJECT_ROOT &&
+  rm wp-config.php &&
+  wp core config --dbname=$project_name $CONFIG_DB_DEFAULT &&
+  wp theme activate $project_name
+}
+
+# Setup
+function setup {
+  project_name="$1"
+
+  cd $PROJECT_ROOT/wp-content/themes/$project_name/grunt &&
+  rm -rf node_modules &&
+  sudo npm i
+}
+
+# load sass files
+function run {
+  project_name="$1"
+
+  cd $PROJECT_ROOT/wp-content/themes/$project_name/grunt &&
+  grunt watch
+}
+
+# Deploy the themes
+function deploy {
+  project_name="$1"
+
+  cd $PROJECT_ROOT/wp-content/themes/$project_name/grunt &&
+  grunt deploy
+}

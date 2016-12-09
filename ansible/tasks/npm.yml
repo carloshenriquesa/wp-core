@@ -1,0 +1,6 @@
+---
+- name: install node packages
+  npm: name={{item}} global=yes
+  with_items:
+    - bower
+    - grunt

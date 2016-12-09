@@ -1,0 +1,44 @@
+---
+- name: Put "vagrant" user in www-data group
+  user:
+    name: "vagrant"
+    groups: "www-data"
+    append: yes
+
+- name: Set up XDebug for remote debugging
+  template:
+    src: "{{ xdebugTemplatePath }}"
+    dest: /etc/php5/apache2/conf.d/xdebug-remote-debugging.ini       
+
+- name: Symlink web root to unzipped WordPress
+  file:
+    src: "/vagrant/wordpress"
+    dest: "/var/www/wordpress"
+    state: "link"
+
+- name: Copy virtual host setup over
+  template: 
+    src: "{{ vhostTemplatePath }}"
+    dest: /etc/apache2/sites-available/
+
+- name: Activate virtual host
+  command: a2ensite vhost
+
+- name: Deactivate default vhost
+  command: a2dissite 000-default
+
+- name: Ensure Apache is running
+  service: 
+    name: apache2 
+    state: restarted 
+    enabled: yes
+
+- name: Setting up vagrant user environment (dotfiles)
+  copy: >
+    src=templates/home/{{ item }}
+    dest=/home/vagrant/.{{ item }}
+    owner=vagrant
+    group=vagrant
+    mode=0644
+  with_items:
+    - bash_aliases

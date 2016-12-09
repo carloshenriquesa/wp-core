@@ -1,0 +1,12 @@
+---
+- name: Setup databases for WordPress
+  mysql_db: >
+    name={{item}}
+    encoding=utf8
+    collation=utf8_unicode_ci
+    state=present
+    login_user=root
+    login_password=mysql
+  with_items:
+    - sinproverj
+    - sibelka

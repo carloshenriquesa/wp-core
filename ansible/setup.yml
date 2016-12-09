@@ -1,0 +1,10 @@
+---
+- hosts: vagrant
+  remote_user: vagrant
+  sudo: yes
+  tasks:
+    - include: tasks/common.yml
+    - include: tasks/host.yml
+    - include: tasks/mysql.yml
+    - include: tasks/mysql_db.yml
+    - include: tasks/npm.yml
