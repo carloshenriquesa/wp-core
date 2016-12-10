@@ -15,6 +15,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ansible.host_key_checking = "false"
     ansible.limit = "all"
   end
+
+  # If true, then any SSH connections made will enable agent forwarding.
+  config.ssh.forward_agent = true
+  
   config.vm.provider :virtualbox do |vb|
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
